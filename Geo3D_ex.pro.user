@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.11.1, 2020-03-16T15:43:06. -->
+<!-- Written by QtCreator 4.11.1, 2020-03-16T17:59:36. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -286,8 +286,8 @@
     </valuelist>
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/Users/huajian/Gsoc/GeoModelExplorer/MyFirstTry/MyFirstTry.pro</value>
-    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">/Users/huajian/Gsoc/GeoModelExplorer/MyFirstTry/MyFirstTry.pro</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/Users/huajian/Gsoc/GeoModelExplorer/Geo3D-ex/Geo3D_ex.pro</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">/Users/huajian/Gsoc/GeoModelExplorer/Geo3D-ex/Geo3D_ex.pro</value>
     <value type="QString" key="RunConfiguration.Arguments"></value>
     <value type="bool" key="RunConfiguration.Arguments.multi">false</value>
     <value type="QString" key="RunConfiguration.OverrideDebuggerStartup"></value>
