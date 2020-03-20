@@ -52,10 +52,11 @@
 #define SCENEMODIFIER_H
 
 #include <QtCore/QObject>
-
+#include <QtWidgets/QLabel>
 #include <Qt3DCore/qentity.h>
 #include <Qt3DCore/qtransform.h>
 #include <Qt3DRender/qmesh.h>
+#include <Qt3DRender/qpickevent.h>
 #include <Qt3DExtras/QPhongMaterial>
 
 class SceneModifier : public QObject
@@ -72,10 +73,14 @@ public slots:
     void rotateMeshY(int degree);
     void rotateMeshZ(int degree);
     void scaleMesh(int magnitude);
+private slots:
+    void onClicked(Qt3DRender::QPickEvent* event);
+    void onClickedTorus(Qt3DRender::QPickEvent* event);
 
 private:
     Qt3DCore::QEntity *m_rootEntity;
     Qt3DCore::QEntity *m_meshEntity;
+    Qt3DCore::QEntity *m_torusMeshEntity;
 };
 
 #endif // SCENEMODIFIER_H

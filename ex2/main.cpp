@@ -35,6 +35,7 @@
 
 #include <Qt3DExtras/qt3dwindow.h>
 #include <Qt3DExtras/qfirstpersoncameracontroller.h>
+QLabel *text;
 
 int main(int argc, char **argv)
 {
@@ -145,6 +146,11 @@ int main(int argc, char **argv)
     sliderZ->setValue(0);
     sliderZ->setGeometry(10, 40, 210, 30);
 
+    text = new QLabel(widget);
+    text->setText("Default value");
+    text->setGeometry(10, 70, 210, 20);
+    text->show();
+
     vLayout->addWidget(info);
     vLayout->addWidget(meshCB);
     vLayout->addWidget(labelScale);
@@ -155,6 +161,7 @@ int main(int argc, char **argv)
     vLayout->addWidget(sliderY);
     vLayout->addWidget(labelZ);
     vLayout->addWidget(sliderZ);
+    vLayout->addWidget(text);
 
     QObject::connect(meshCB, &QCheckBox::stateChanged, modifier, &SceneModifier::enableMesh);
     QObject::connect(sliderScale, &QSlider::valueChanged, modifier, &SceneModifier::scaleMesh);
