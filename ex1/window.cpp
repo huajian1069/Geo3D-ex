@@ -1,8 +1,6 @@
 #include "window.h"
 #include "popup.h"
 
-#include <QApplication>
-
 Window::Window(QWidget *parent) : QWidget(parent)
 {
     setFixedSize(100, 50);
