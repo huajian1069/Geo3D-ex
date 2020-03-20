@@ -35,7 +35,7 @@
 
 #include <Qt3DExtras/qt3dwindow.h>
 #include <Qt3DExtras/qfirstpersoncameracontroller.h>
-QLabel *text;
+QCommandLinkButton *info;
 
 int main(int argc, char **argv)
 {
@@ -86,21 +86,23 @@ int main(int argc, char **argv)
     view->setRootEntity(rootEntity);
 
     // Create control widgets
-    QCommandLinkButton *info = new QCommandLinkButton();
-    info->setText(QStringLiteral("Qt3D ready-made meshes"));
-    info->setDescription(QString::fromLatin1("Qt3D provides several ready-made meshes, like torus, cylinder, cone, "
-                                             "cube, plane and sphere."));
+    info = new QCommandLinkButton();
+    info->setText(QStringLiteral("Some info about mesh:"));
+    info->setDescription(QString::fromLatin1("Defaut message\n without\n click any object."));
     info->setIconSize(QSize(0,0));
+    info->setFixedSize(QSize(200, 100));
+    info->setFont(QFont ("Courier", 15));
 
+    // Create a checkbox
     QCheckBox *meshCB = new QCheckBox(widget);
     meshCB->setChecked(true);
-    meshCB->setText(QStringLiteral("Torus"));
+    meshCB->setText(QStringLiteral("Display Detector Mesh"));
 
 
     //create a label
     QLabel *labelScale = new QLabel(widget);
-    labelScale->setText("Scale slider (0.1-5)");
-    labelScale->setGeometry(10, 70, 210, 20);
+    labelScale->setText("Scale slider (0.001-0.011)");
+    labelScale->setGeometry(10, 120, 210, 20);
     labelScale->show();
     // create a slider
     QSlider *sliderScale = new QSlider(widget);
@@ -146,11 +148,6 @@ int main(int argc, char **argv)
     sliderZ->setValue(0);
     sliderZ->setGeometry(10, 40, 210, 30);
 
-    text = new QLabel(widget);
-    text->setText("Default value");
-    text->setGeometry(10, 70, 210, 20);
-    text->show();
-
     vLayout->addWidget(info);
     vLayout->addWidget(meshCB);
     vLayout->addWidget(labelScale);
@@ -161,7 +158,6 @@ int main(int argc, char **argv)
     vLayout->addWidget(sliderY);
     vLayout->addWidget(labelZ);
     vLayout->addWidget(sliderZ);
-    vLayout->addWidget(text);
 
     QObject::connect(meshCB, &QCheckBox::stateChanged, modifier, &SceneModifier::enableMesh);
     QObject::connect(sliderScale, &QSlider::valueChanged, modifier, &SceneModifier::scaleMesh);

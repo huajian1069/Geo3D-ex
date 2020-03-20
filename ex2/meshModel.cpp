@@ -2,24 +2,32 @@
 #include <QString>
 #include <QtCore/QDebug>
 #include <QtCore/QString>
-#include <QtWidgets/QLabel>
+#include <QtWidgets/QCommandLinkButton>
 #include <Qt3DRender/QObjectPicker>
 #include <Qt3DExtras/QTorusMesh>
+#include <Qt3DRender/QPickingSettings>
 
-extern QLabel *text;
+extern QCommandLinkButton *info;
 
 SceneModifier::SceneModifier(Qt3DCore::QEntity *rootEntity)
     : m_rootEntity(rootEntity)
 {
+    // set picking method
+    Qt3DRender::QPickingSettings *settings = new Qt3DRender::QPickingSettings();
+    settings->setPickMethod(Qt3DRender::QPickingSettings::PickMethod::TrianglePicking);
+
     // Mesh shape data
     Qt3DRender::QMesh *mesh = new Qt3DRender::QMesh();
     mesh->setSource(QUrl("qrc:/mesh/TrackML-PixelDetector.obj"));
+    mesh->setProperty("Vertices", QVariant(37216));
+    mesh->setProperty("Edges", QVariant(58416));
+    mesh->setProperty("Faces", QVariant(29208));
 
     // Mesh Transform
     Qt3DCore::QTransform *meshTransform = new Qt3DCore::QTransform();
-    meshTransform->setScale(0.011f);
+    meshTransform->setScale(0.006f);
     meshTransform->setRotation(QQuaternion::fromAxisAndAngle(QVector3D(0.0f, 1.0f, 0.0f), 0.0f));
-    meshTransform->setTranslation(QVector3D(0.0f, 0.0f, 0.0f));
+    meshTransform->setTranslation(QVector3D(-2.0f, -2.0f, 0.0f));
 
     // Mesh material
     Qt3DExtras::QPhongMaterial *meshMaterial = new Qt3DExtras::QPhongMaterial();
@@ -48,9 +56,9 @@ SceneModifier::SceneModifier(Qt3DCore::QEntity *rootEntity)
 
     // Torus Mesh Transform
     Qt3DCore::QTransform *torusMeshTransform = new Qt3DCore::QTransform();
-    torusMeshTransform->setScale(1.0f);
-    torusMeshTransform->setRotation(QQuaternion::fromAxisAndAngle(QVector3D(0.0f, 1.0f, 0.0f), 0.0f));
-    torusMeshTransform->setTranslation(QVector3D(10.0f, 10.0f, 0.0f));
+    torusMeshTransform->setScale(3.0f);
+    torusMeshTransform->setRotation(QQuaternion::fromAxisAndAngle(QVector3D(0.0f, 1.0f, 0.0f), 30.0f));
+    torusMeshTransform->setTranslation(QVector3D(20.0f, 15.0f, -40.0f));
 
     // Torus picker
     Qt3DRender::QObjectPicker *torusPicker = new Qt3DRender::QObjectPicker();
@@ -63,7 +71,6 @@ SceneModifier::SceneModifier(Qt3DCore::QEntity *rootEntity)
     m_torusMeshEntity->addComponent(torusMeshTransform);
     m_torusMeshEntity->addComponent(torusPicker);
     QObject::connect(torusPicker, &Qt3DRender::QObjectPicker::clicked, this, &SceneModifier::onClickedTorus);
-
 }
 SceneModifier::~SceneModifier()
 {
@@ -71,15 +78,16 @@ SceneModifier::~SceneModifier()
 
 void SceneModifier::onClicked(Qt3DRender::QPickEvent* event){
     Qt3DRender::QMesh *mesh =  (Qt3DRender::QMesh*)(m_meshEntity->componentsOfType<Qt3DRender::QMesh>()[0]);
-    text->setText(QString("Something about Mesh: %1").arg(mesh->source()));
+    info->setDescription(QString("Vertices: ") + mesh->property("Vertices").toString() +
+                         QString("\nEdges: ") + mesh->property("Edges").toString() +
+                         QString("\nFaces: ") + mesh->property("Faces").toString());
 }
 
 void SceneModifier::onClickedTorus(Qt3DRender::QPickEvent* event){
     Qt3DExtras::QTorusMesh *mesh =  (Qt3DExtras::QTorusMesh*)(m_torusMeshEntity->componentsOfType<Qt3DExtras::QTorusMesh>()[0]);
-    text->setText(QString("Something about Mesh:\n radius = %1, rings = %2, slices=%3")
+    info->setDescription(QString("Radius: %1 \nRings: %2 \nSlices: %3")
                   .arg(mesh->radius()).arg(mesh->rings()).arg(mesh->slices()));
 }
-
 
 
 void SceneModifier::enableMesh(bool enabled)
@@ -88,7 +96,7 @@ void SceneModifier::enableMesh(bool enabled)
 }
 void SceneModifier::scaleMesh(int magnitude)
 {
-    float magnitudeF = 0.001 + (float)(magnitude) * 0.02 / 100.0;
+    float magnitudeF = 0.001 + (float)(magnitude) * 0.01 / 100.0;
     Qt3DCore::QTransform *transform =  (Qt3DCore::QTransform*)(m_meshEntity->componentsOfType<Qt3DCore::QTransform>()[0]);
     transform->setScale(magnitudeF);
 }
